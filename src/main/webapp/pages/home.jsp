@@ -8,7 +8,8 @@
 </head>
 <body>
 	Yay! The server is up and running!
+	</br>
+	
+	Welcome, ${name}
 </body>
 </html>
-
-localhost:8080/home
