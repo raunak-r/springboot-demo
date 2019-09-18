@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Homepage</title>
+<title>Insert title here</title>
 </head>
 <body>
-	Yay! The server is up and running!
-	</br>
-	
-	Welcome, ${name}
+	<form action="addAlien">
+		<input type="text" name="aid"><br>
+		<input type="text" name="aname"><br>
+		<input type="submit"><br>
+	</form>
 </body>
 </html>
