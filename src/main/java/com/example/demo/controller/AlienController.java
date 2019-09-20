@@ -30,6 +30,11 @@ public class AlienController {
 	public ModelAndView getAlien(@RequestParam int aid) {
 		ModelAndView mv = new ModelAndView("showAlien");
 		Alien alien = repo.findById(aid).orElse(new Alien());
+		
+		System.out.println(repo.findByTech("java"));
+		System.out.println(repo.findByAidGreaterThan(1));
+		System.out.println(repo.findByTechSorted("java"));
+		
 		mv.addObject(alien);
 		return mv;
 	}
