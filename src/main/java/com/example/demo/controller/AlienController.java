@@ -4,17 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.dao.AlienRepo;
 import com.example.demo.model.Alien;
 
-@Controller
+@RestController
 public class AlienController {
 	@Autowired
 	AlienRepo repo;
@@ -23,16 +25,10 @@ public class AlienController {
 	public String home() {
 		System.out.println("Inside Alien Controller...");
 		return "home";
-	}
-	
-	@RequestMapping("/addAlien")
-	public String addAlien(Alien alien) {
-		repo.save(alien);
-		return "home";
-	}
+	}	
 	
 	
-	
+	//***************GET One Object at a time
 //	localhost:8080/getAlien/?aid=1  | as an HTML
 	@RequestMapping("/getAlien")
 	public ModelAndView getAlien(@RequestParam int aid) {
@@ -47,8 +43,6 @@ public class AlienController {
 		return mv;
 	}
 	
-	
-	
 //	localhost:8080/getAlien/1  | as an object/text
 	@RequestMapping("/getAlien/{aid}")
 	@ResponseBody
@@ -62,9 +56,10 @@ public class AlienController {
 	public Optional<Alien> getOptionalAliens(@PathVariable("aid") int aid){
 		return repo.findById(aid);
 	}
+	//***************
 	
 	
-	
+	//***************GET List of Objects
 //	localhost:8080/aliens  | Text List
 	@RequestMapping("/aliens")
 	@ResponseBody
@@ -77,5 +72,20 @@ public class AlienController {
 	@ResponseBody
 	public List<Alien> getAlienList(){
 		return (List<Alien>) repo.findAll();
-	}	
+	}
+	//***************
+	
+	
+	//***************POST new alien
+	@RequestMapping("/addAlien")
+	public String addAlien(Alien alien) {
+		repo.save(alien);
+		return "home";
+	}
+	
+	@PostMapping("/alien")
+	public Alien addAlienPost(@RequestBody Alien alien) {
+		repo.save(alien);
+		return alien;
+	}
 }
