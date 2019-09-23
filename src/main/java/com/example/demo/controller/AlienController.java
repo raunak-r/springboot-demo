@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,9 @@ public class AlienController {
 		return "home";
 	}
 	
-//	localhost:8080/getAlien/?aid=1
+	
+	
+//	localhost:8080/getAlien/?aid=1  | as an HTML
 	@RequestMapping("/getAlien")
 	public ModelAndView getAlien(@RequestParam int aid) {
 		ModelAndView mv = new ModelAndView("showAlien");
@@ -44,21 +47,32 @@ public class AlienController {
 		return mv;
 	}
 	
-//	localhost:8080/getAlien/1
+	
+	
+//	localhost:8080/getAlien/1  | as an object/text
 	@RequestMapping("/getAlien/{aid}")
 	@ResponseBody
 	public String getAliens(@PathVariable("aid") int aid){
 		return repo.findById(aid).toString();
 	}
 	
-//	localhost:8080/aliens
+//	localhost:8080/getAlien/optional/1  | in JSON format.
+	@RequestMapping("/getAlien/optional/{aid}")
+	@ResponseBody
+	public Optional<Alien> getOptionalAliens(@PathVariable("aid") int aid){
+		return repo.findById(aid);
+	}
+	
+	
+	
+//	localhost:8080/aliens  | Text List
 	@RequestMapping("/aliens")
 	@ResponseBody
 	public String getAliens(){
 		return repo.findAll().toString();
 	}
 	
-//	localhost:8080/aliens
+//	localhost:8080/aliens/list  | JSON Format
 	@RequestMapping("/aliens/list")
 	@ResponseBody
 	public List<Alien> getAlienList(){
